@@ -1,0 +1,260 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<script src="https://apis.google.com/js/api.js"></script>
+<!-- inside add_channel -->
+<div class="container-fluid">
+<!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/dashboard">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active"> Channel</li>
+  </ol>
+  <div class="row">
+    <div class="col-md-12 column">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">Add channel details</h3> 
+        </div>
+        <form action="/addchannel" method="post">
+          <div class="box-body">
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label>Enter Channel ID<span class="text-danger"></span></label>
+                <input type="text" name="channelid" id="channelid" class="form-control">
+              </div>
+              <div class="form-group col-md-3">
+                <label>Enter Playlist Id<span class="text-danger"></span></label>
+                <input type="text" name="playlistid" id="playlistid" class="form-control">
+              </div>
+              <div class="form-group col-md-6">
+                <div class="input text">
+                  <label>Channel Credentials</label><br>
+                  <button onclick="setChannelID()" class="btn btn-info btn-sm">Submit</button>
+                </div>
+              </div>
+
+            </div>
+            
+            <div class="row">
+              <div class="form-group col-md-3">
+                <label>Channel Name<span class="text-danger"></span></label>
+                <input type="text" name="channelname" id="channelname" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Channel Url<span class="text-danger">*</span></label>
+                <input type="text" name="channel_url" id="channel_url" class="form-control">
+              </div>
+              
+              <div class="form-group col-md-3">
+                <label>Thumbnails<span class="text-danger"></span></label>
+                <input type="text" name="thumbnails" id="thumbnails" placeholder="Thumbnails url" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Subscriber<span class="text-danger"></span></label>
+                <input type="text" name="subscriber" id="subscriber" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Rank<span class="text-danger"></span></label>
+                <input type="text" name="rank" id="rank" required class="form-control">
+              </div>
+              <div class="form-group col-md-3">
+                <label>Gems<span class="text-danger"></span></label>
+                <input type="text" name="gems" id="gems" class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Bricks<span class="text-danger"></span></label>
+                <input type="text" name="bricks" id="bricks" class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Select Category<span class="text-danger">*</span></label><br/>
+                <select class="form-control" name="categoryname">
+                <option value="">--- Select Category ---</option>
+                  <% if(category.length > 0)
+                    {
+                      category.forEach(function(row) {
+                      %>
+                        <option value="<%= row.name %>"> <%= row.name %> </option>
+                      <% }) 
+                    }
+                  %>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Trust<span class="text-danger">*</span></label>
+                <select name="trust" id="trust" class="form-control">
+                  <option value="0.5">0.5</option>
+                  <option value="1">1</option>
+                  <option value="1.5">1.5</option>
+                  <option value="2">2</option>
+                  <option value="2.5">2.5</option>
+                  <option value="3">3</option>
+                  <option value="3.5">3.5</option>
+                  <option value="4">4</option>
+                  <option value="4.5">4.5</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label>Rating<span class="text-danger">*</span></label>
+                <input type="text" name="rating" id="rating" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Description<span class="text-danger">*</span></label>
+                <textarea cols="50" maxlength="600" name="description" id="description" class="form-control"> </textarea>
+              </div>
+
+              <!-- <div class="form-group col-md-3">
+                <label>Review<span class="text-danger">*</span></label>
+                <select name="review" id="review" class="form-control">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                </select>
+              </div> -->
+
+              <div class="form-group col-md-3">
+                <label>Channel Id</label>
+                <input type="text" name="channel_Id" id="channel_Id" class="form-control">
+              </div>
+
+              <div class="form-group col-md-3 hidden">
+                <label>Youtube Id</label>
+                <input type="text" name="youtube_id" id="youtube_id" class="form-control">
+              </div>
+
+              <div class="form-group col-md-6">
+                <label>Rating Review<span class="text-danger">*</span></label>
+                <textarea cols="50" maxlength="600" name="rating_review" id="rating_review" required class="form-control"> </textarea>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group col-md-6">
+                <div class="input text">
+					        <label>Youtube Credentials</label><br>
+                  <button onclick="authenticate().then(loadClient)" class="btn btn-primary btn-sm">Authorize and load</button>
+                  <button onclick="execute()" class="btn btn-info btn-sm">Execute</button>                   
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="input text">
+					        <label>&nbsp;</label><br>
+                  <button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Save</button>
+                  <a href="/traders_channel" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+                </div>
+              </div>			  
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  
+/* JavaScript code for youtube.channels.list */
+ var channelID_ = 'UCeDngY5JwicmSdy1HCMAZTA';
+ var playlistId_ = 'PLfmkHWsocEqI6HBun7gQfvJXVso8zOicZ'; 
+
+function setChannelID() {
+  var channel_= $("#channelid").val()
+  var playlist_= $("#playlistid").val()
+  if(channel_ != '' || playlist_ != '' )
+  {
+    channelID_ = channel_;
+    playlistId_ = playlist_;
+  }
+}
+
+
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+    .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+    .then(function() { console.log("Sign-in successful"); },
+    function(err) {
+      console.error("Error signing in", err); 
+    });
+  }
+  
+  function loadClient() {
+    gapi.client.setApiKey("AIzaSyC2rAmRz38OJAdkXoREzSoPRunJR6sQ-lI");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+    .then(function() {
+      console.log("GAPI client loaded for API"); 
+    },
+    function(err) {
+      console.error("Error loading GAPI client for API", err); 
+    });
+  }
+  function execute() {
+    return gapi.client.youtube.channels.list({
+      "part": "snippet,contentDetails,statistics",
+      "id": channelID_
+    }).then(function(response) {
+      console.log('channelList : ', response.result);
+      var channels = response.result;
+      if (channels.length == 0) {
+        console.log('No channel found.');
+      }
+      else {
+        execute_();
+        $("#channel_Id").val(channels.items[0].id)
+        $("#channelname").val(channels.items[0].snippet.title)
+        $("#description").val(channels.items[0].snippet.description)
+        $("#subscriber").val(channels.items[0].statistics.subscriberCount)
+        $("#thumbnails").val(channels.items[0].snippet.thumbnails.default.url)
+        $("#channel_url").val('https://www.youtube.com/channel/' + channels.items[0].id)
+      }
+    },
+    function(err) {
+      console.error("Execute error", err);
+    });
+  }
+  function execute_() {
+    return gapi.client.youtube.playlistItems.list({
+      "part": "snippet,contentDetails",
+      "maxResults": 25,
+      "playlistId": playlistId_
+    }).then(function(response) {
+      var playlist = response.result;
+      if (playlist.length == 0) {
+        console.log('No playlist found.');
+      }
+      else {
+        var i;
+        var j = -1;
+        for(i = 0; i < playlist.items.length ; i++) {
+          j++
+        }
+        // $("#channel_Id").val(playlist.items[0].snippet.channelId)
+        $("#youtube_id").val(playlist.items[j].contentDetails.videoId)
+      }
+    },
+    function(err) {
+      console.error("Execute error", err); 
+    });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "765512306080-khvurlbpvhgdln9cn8vc98t4vj67iidk.apps.googleusercontent.com"});
+  });
+</script>
+
+
+<!-- Footer-->
+<% include templates/footer.ejs %>

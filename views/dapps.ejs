@@ -1,0 +1,110 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Dapps</li>
+    </ol>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <i class="fas fa-table"></i> Submit Dapps
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table" width="100%" id="dataTable" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Dapp Name</th>
+                            <th>Email</th>
+                            <th>Telegram</th>
+                            <th>Website</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th width="10%">Details</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Dapp Name</th>
+                            <th>Email</th>
+                            <th>Telegram</th>
+                            <th>Website</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th width="10%">Details</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <%
+                            if(dapps != '')
+                            {
+                                for(var i=0; i < dapps.length; i++)
+                                {
+                                    %>
+                                        <tr>
+                                            <td> <%= dapps[i].dappName%></td>
+                                            <td> <%= dapps[i].email%></td>	
+                                            <td> <%= dapps[i].telegram%></td>	
+                                            <td> <%= dapps[i].website%></td>
+                                            <td> <%= dapps[i].description%></td>		
+                                            <td> <%= dapps[i].category%></td>	
+                                            <td> <%= dapps[i].title%></td>
+                                            <td>
+                                                <%
+                                                    if(dapps[i].activeStatus == true)
+                                                    {
+                                                        %>
+                                                            Accepted
+                                                        <%
+                                                    }
+                                                    else
+                                                    {
+                                                        %>
+                                                            Unaccepted
+                                                        <%
+                                                    }
+                                                %>
+                                            </td>	
+                                            <td>
+												<a href="/dappsDetails/<%= dapps[i]._id %>">Details</a>
+											</td>
+                                            <td>
+                                                <!-- <a href="/editdapps/<%= dapps[i]._id %>">
+                                                  <i class="fas fa-edit text-info"></i>
+                                                </a> -->
+                                                &nbsp;
+                                                <i class="fas fa-trash text-danger" onClick="removeDetails('removeDapps','<%= dapps[i]._id %>')" style="cursor:pointer"></i>														
+                                                
+                                              </td>
+                                        </tr>
+                                    <%
+                                }
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer-->
+<script>
+</script>
+
+
+<% include templates/footer.ejs %>

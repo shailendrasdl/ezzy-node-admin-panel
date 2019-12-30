@@ -1,0 +1,115 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Press releases</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Press releases
+						</div>
+						<div class="col-md-2">
+							<a href="/addpress_releases" class="btn btn-info btn-block" title="Press releases">Add New</a>
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Image</th>
+									<th>Title</th>
+									<th>Text</th>
+									<th>Link</th>
+									<th>Start date/time</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Image</th>
+									<th>Title</th>
+									<th>Text</th>
+									<th>Link</th>
+									<th>Start date/time</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									if(press_releases != '')
+									{
+										for(var i=0; i < press_releases.length; i++)
+										{
+											%>
+												<tr>
+													<td>
+														<%
+															if(press_releases[i].image)
+															{
+																%>
+																	<img src="/uploads/<%= press_releases[i].image %>" width="100px;" height="100px">																
+																<%
+															}
+														%>
+													</td>
+													<td><%= press_releases[i].title %></td>													
+													<td><%= press_releases[i].text %></td>
+													<td>
+														<%
+															if(press_releases[i].link_one)
+															{
+																%>
+																	<%= press_releases[i].link_one %>
+																<%
+															}
+															if(press_releases[i].link_two)
+															{
+																%>
+																	<%= press_releases[i].link_two %>
+																<%
+															}
+															if(press_releases[i].link_three)
+															{
+																%>
+																	<%= press_releases[i].link_three %>
+																<%
+															}
+														%>
+													</td>	
+													<td><%= press_releases[i].start_datetime %></td>
+													<td>
+														<a href="/editpress_releases/<%= press_releases[i]._id %>">
+															<i class="fas fa-edit text-info"></i>
+														</a>
+														&nbsp;														
+														<i class="fas fa-trash text-danger" onClick="removeDetails('removepress_releases','<%= press_releases[i]._id %>')" style="cursor:pointer"></i>
+													</td>
+												</tr>
+											<%	
+										}
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

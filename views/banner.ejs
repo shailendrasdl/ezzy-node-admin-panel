@@ -1,0 +1,93 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Banner</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Banner
+						</div>
+						<div class="col-md-2">
+							<a href="/addbanner" class="btn btn-info btn-block" title="Banner">Add New</a>
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" width="100%" id="dataTable" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Image</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Image</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									if(banner_result != '')
+									{
+										for(var i=0; i < banner_result.length; i++)
+										{
+											%>
+												<tr>
+													<td>
+														<img src="/uploads/<%= banner_result[i].image %>" width="100px;" height="auto">
+													</td>													
+													<td>
+														<%
+															if(banner_result[i].status == true)
+															{
+																%>
+																	Active
+																<%
+															}
+															else
+															{
+																%>
+																	Inactive
+																<%
+															}
+														%>
+													</td>
+													<td>
+														<a href="/editbanner/<%= banner_result[i]._id %>">
+															<i class="fas fa-edit text-info"></i>
+														</a>
+														&nbsp;														
+														<i class="fas fa-trash text-danger" onClick="removeDetails('removebanner','<%= banner_result[i]._id %>')" style="cursor:pointer"></i>
+													</td>
+												</tr>
+											<%	
+										}
+									}
+								%>
+							</tbody>
+						</table>
+					</div>					
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

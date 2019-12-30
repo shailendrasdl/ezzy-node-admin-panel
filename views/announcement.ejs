@@ -1,0 +1,104 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Announcement</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Announcement
+						</div>
+						<div class="col-md-2">
+							<a href="/addannouncement" class="btn btn-info btn-block" title="Announcement">Add New</a>
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Category</th>
+									<th>Start date</th>
+									<th>End date</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Title</th>
+									<th>Description</th>
+									<th>Category</th>
+									<th>Start date</th>
+									<th>End date</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									if(announcement_result != '')
+									{
+										for(var i=0; i < announcement_result.length; i++)
+										{
+											var j=0;
+											%>
+												<tr>
+													<td><%= announcement_result[i].title %></td>
+													<td><%= announcement_result[i].description %></td>													
+													<td><%= announcement_result[i].category %> day</td>
+													<td><%= announcement_result[i].start_date %> day</td>
+													<td><%= announcement_result[i].end_date %> day</td>
+													<td>
+														<%
+															if(announcement_result[i].status == true)
+															{
+																%>
+																	<span class="text-success">Active</span>
+																<%
+															}
+															else
+															{
+																%>
+																	<span class="text-warning">Inactive</span>
+																<%
+															}
+														%>
+													</td>
+													<td>	
+														<a href="/editannouncement/<%= announcement_result[i]._id %>">
+															<i class="fas fa-edit text-info"></i>
+														</a>
+														&nbsp;	
+														<i class="fas fa-trash text-danger" onClick="removeDetails('removeannouncement', '<%= announcement_result[i]._id %>')" style="cursor:pointer"></i>
+													</td>
+												</tr>
+											<%											
+										}
+									}								
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

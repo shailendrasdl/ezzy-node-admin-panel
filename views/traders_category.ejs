@@ -1,0 +1,87 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<!--Inside traders&influencers -->
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Traders & Influencers</li>
+  </ol>
+  <div class="card mb-3">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fas fa-table"></i> Category
+        </div>
+        <div class="col-md-2">
+          <a href="/add_traders_category" class="btn btn-info btn-block" title="Category">Add New</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th> Icon </th>
+              <th> Name</th>
+              <th> Status </th>
+              <th> Action </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th> Icon </th>
+              <th> Name </th>
+              <th> Status </th>
+              <th> Action </th>
+            </tr>
+          </tfoot>
+          <tbody>
+              <%
+                if(tradCategory != '')
+                {
+                  for(var i=0; i < tradCategory.length; i++) {
+                    %>
+                      <tr>
+                        <td> <img src="/uploads/<%= tradCategory[i].icon %>" width="100px" height="auto"></img> </td>
+                        <td> <%= tradCategory[i].name %> </td>
+                        <td>
+                          <%
+                            if(tradCategory[i].status == true) {
+                              %>
+                                Active
+                              <%
+                            }
+                            else {
+                              %>
+                                Inactive
+                              <%
+                            }
+                          %>
+                        </td>
+                        <td>
+                          <a href="/editTradersCategory/<%= tradCategory[i]._id %>"> <i class="fas fa-edit text-info"></i> </a>
+                          &nbsp;														
+                          <i class="fas fa-trash text-danger" onClick="removeDetails('removeTradersCategory','<%= tradCategory[i]._id %>')" style="cursor:pointer"></i>
+                        </td>
+                      </tr>
+                    <%	
+                  }
+                }
+              %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<!-- Footer-->
+<% include templates/footer.ejs %>

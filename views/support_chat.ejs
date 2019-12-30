@@ -1,0 +1,241 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<script src="https://cdn.ckeditor.com/4.12.1/standard/ckeditor.js"></script>    
+<div class="container-fluid">
+	<!-- Breadcrumbs-->
+	<ol class="breadcrumb">
+		<li class="breadcrumb-item">
+			<a href="/">Dashboard</a>
+		</li>
+		<li class="breadcrumb-item active">Support</li>
+	</ol>
+	<h3 class=" text-center">Messaging</h3>
+	<div class="card mb-3">
+		<div class="container">
+			<div class="messaging">
+				<div class="mesgs">
+					<div class="msg_history" id="bottom">
+						<%
+							if(supportChat_list)
+							{
+								for(var i=0; i < supportChat_list.length; i++)
+								{
+									if(supportChat_list[i].to_id == 0)
+									{
+										%>
+											<div class="incoming_msg">
+												<div class="incoming_msg_img"> 
+													<img src="https://ptetutorials.com/images/user-profile.png" alt="" width="50px" height="50px"> 
+												</div>
+												<div class="received_msg">
+													<div class="received_withd_msg">
+															
+														<p>
+															<%- supportChat_list[i].message %>
+														</p>
+														<span class="time_date"> <%= supportChat_list[i].created_at %></span>
+													</div>
+												</div>
+											</div>
+										<%
+									}
+									else
+									{
+										%>
+											<div class="outgoing_msg">
+												<div class="sent_msg">																														
+													<p>
+														<%- supportChat_list[i].message %>
+													</p>
+													<span class="time_date"> <%= supportChat_list[i].created_at %></span> 
+												</div>
+											</div>
+										<%
+									}
+								}
+							}
+							else
+							{
+								%>
+									No record found
+								<%
+							}
+						%>
+					</div>
+					<%							
+						if(supportChat_list[0].status != true)
+						{
+							%>
+								<div class="type_msg">
+									<form action="/supportreply/<%= supportChat_list[0].ticket %>"  method="post">
+										<div class="input_msg_write">
+											<div class="row">
+												<div class="col-md-8">
+													<!--<input type="text"  id="editor" name="message" required class="write_msg form-control" placeholder="Type a message" />-->
+													<textarea  id="editor" name="message" required class="write_msg form-control" placeholder="Type a message"></textarea>
+													<input type="hidden" id="ticket" name="ticket" class="hidden" value="<%= supportChat_list[0].ticket %>" />
+													<input type="hidden" id="to_id" name="to_id" class="hidden" value="<%= supportChat_list[0].to_id %>" />
+												</div>
+												<div class="col-md-4">
+													<button class="msg_send_btn btn btn-info" type="submit" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i>Send</button>
+													<button class="msg_send_btn btn btn-info" type="submit" formaction="/sendwithemail/<%= supportChat_list[0].ticket %>" ><i class="fa fa-paper-plane-o" aria-hidden="true"></i>Send Email</button>
+													
+													<!-- <span class="msg_send_btn btn btn-danger" style="cursor:pointer" onClick="supportReply();"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>Send</span> -->
+													<!-- &nbsp;&nbsp;<span onClick="sendEmail();" class="msg_send_btn btn btn-info" style="cursor:pointer"><i class="fa fa-paper-plane-o" aria-hidden="true"></i>Send With Email</span> -->
+												</div>
+											</div>												
+											<p></p><p></p>	
+											<a class="confirm btn btn-success btn-lg col-md-12" onclick="return ticketClose_detail('<%= supportChat_list[0].ticket %>');" href="javascript:void(0);">Ticket Close</a>														
+										</div>
+									</form>
+								</div>
+							<%
+						}
+					%>
+				</div>
+			</div>
+		</div>
+	</div>			
+</div>
+<!-- /.container-fluid -->
+<!-- Footer -->
+
+<script>
+	CKEDITOR.replace('editor');
+</script>
+
+<script>
+	$(function()
+	{
+		$("#bottom")[0].scrollTop = $("#bottom")[0].scrollHeight - $("#bottom").height();
+	});
+</script>
+
+<script>
+	/* Support chat */
+		setInterval(function(){ 
+			var id = '<%= supportChat_list[0].ticket %>';
+			if(id)
+			{
+				supportChat_live(id);							
+			}
+		}, 5000);
+		
+		function supportChat_live(id)
+		{
+			$.ajax({
+				url: '/supportChat_live/'+id,
+				type: 'GET',
+				cache: false,
+				success: function(response){
+					if(response)
+					{
+						$('.msg_history').html(response);
+						$("#lastClass").animate({
+							scrollTop: document.body.scrollHeight
+						}, 500);
+					}
+					else
+					{
+						$('.msg_history').text('No record found');
+					}
+				}
+			});			
+		}
+
+		/* sendWithEmail */
+		function sendEmail()
+		{
+			var message = $("#message").val();
+			var ticket = $("#ticket").val();
+			var to_id = $("#to_id").val();
+			// alert(message);
+			if(message != '' && ticket != '' && to_id != '') {
+				var dataString = 'message='+message+'&to_id='+to_id;
+				$.ajax({
+					url: '/sendwithemail/'+ticket,
+					type: 'POST',
+					data: dataString,
+					cache: false,
+					success: function(response){
+						if(response)
+						{
+							$('#message').val('');
+							$('.msg_history').html(response);
+						}
+						else
+						{
+							$('.msg_history').text('No record found');
+						}
+					}
+				});					
+			}
+		}
+		
+		/* supportReply */
+		function supportReply()
+		{
+			alert("-> call supportReply");
+			var message = $("#message").val();
+			var ticket = $("#ticket").val();
+			var to_id = $("#to_id").val();
+			if(message != '' && ticket != '' && to_id != '')
+			{
+				var dataString = 'message='+message+'&ticket='+ticket+'&to_id='+to_id;
+				$.ajax({
+					url: '/supportreply/'+ticket,
+					type: 'POST',
+					data: dataString,
+					cache: false,
+					success: function(response){
+						if(response)
+						{
+							$('#message').val('');
+							$('.msg_history').html(response);
+						}
+						else
+						{
+							$('.msg_history').text('No record found');
+						}
+					}
+				});					
+			}
+		}
+		
+
+		function ticketClose_detail(ticket)
+		{
+			if(ticket != '')
+			{
+				bootbox.confirm("Are you sure you want to close this ticket",function(confirmed){
+					if(confirmed)
+					{
+						var dataString = 'ticket='+ticket;
+						$.ajax({
+							url: '/ticketClose/'+ticket,
+							type: 'POST',
+							data: dataString,
+							cache: false,
+							success: function(response){
+								if(response)
+								{
+									toastr.success('Ticket close successful', 'Success!');
+									setTimeout(function(){ window.location.reload(); }, 2000);
+								}
+								else
+								{
+									toastr.success('Some error occured', 'Warning!');
+									setTimeout(function(){ window.location.reload(); }, 2000);
+								}
+							}
+						});
+					}	
+				});
+			}
+		}						
+</script>
+
+<% include templates/footer.ejs %>
+<!--// -->           

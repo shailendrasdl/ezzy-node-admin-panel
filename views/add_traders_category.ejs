@@ -1,0 +1,53 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<!--// -->
+<!--Inside  Add_traders_category-->
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/dashboard">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active"> Traders & Influencers</li>
+  </ol>
+
+  <div class="row">
+    <div class="col-md-12 column">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">Add Traders Category details</h3> 
+        </div>
+        <form action="/add_traders_category" method="post" enctype="multipart/form-data">
+          <div class="box-body">
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Select Icon<span class="text-danger">*</span></label><br/>
+                <input type="file" name="icon" required id="fileUpload">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-6">
+                <label>Name<span class="text-danger">*</span></label>
+                <input type="text" name="catname" id="catname" required class="form-control">
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-5">
+                <div class="input text">
+                  <button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Save</button>
+                  <a href="/traders_category" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+<!-- Footer -->
+<% include templates/footer.ejs %>
+<!--// -->           

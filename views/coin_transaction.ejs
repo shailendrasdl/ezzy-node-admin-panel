@@ -1,0 +1,70 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<h3>Transaction success</h3>
+<%
+	for(var i=0; i < userList.length; i++)
+	{
+		%>
+			<script>
+				var eth_add = '<%= userList[i].eth_address %>';																					
+				var web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/baf22b6c2cd84003aa418a653eacecfa"));
+				if(eth_add)
+				{
+					var tokenAddress = "0x5dE805154A24Cb824Ea70F9025527f35FaCD73a1";
+					var walletAddress = '<%= userList[i].eth_address %>';
+					
+					// The minimum ABI to get ERC20 Token balance
+					var minABI = [
+					  // balanceOf
+					  {
+						"constant":true,
+						"inputs":[{"name":"_owner","type":"address"}],
+						"name":"balanceOf",
+						"outputs":[{"name":"balance","type":"uint256"}],
+						"type":"function"
+					  },
+					  // decimals
+					  {
+						"constant":true,
+						"inputs":[],
+						"name":"decimals",
+						"outputs":[{"name":"","type":"uint8"}],
+						"type":"function"
+					  }
+					];
+
+					// Get ERC20 Token contract instance
+					var contract = web3.eth.contract(minABI).at(tokenAddress);
+
+					// Call balanceOf function
+					contract.balanceOf(walletAddress, (error, balance) => {
+					  // Get decimals
+						contract.decimals((error, decimals) => {
+							// calculate a balance
+							balance = balance.div(10**decimals);
+							var user_balance = balance.toString();
+							var dataString = 'user_id='+'<%= userList[i]._id %>'+'&current_value='+user_balance;
+							$.ajax({
+								url: '/current_transaction',
+								type: 'POST',
+								data: dataString,
+								success: function(responce){
+									console.log(responce);
+								}
+							});
+						});
+					});																						
+				}
+			</script>
+		<%		
+	}
+%>
+
+<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

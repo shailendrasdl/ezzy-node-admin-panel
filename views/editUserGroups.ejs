@@ -1,0 +1,41 @@
+<!-- Include Header -->
+<% include templates/header.ejs %>
+<!-- Include Sidebar -->
+<% include templates/sidebar.ejs %>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/dashboard">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">User Group edit</li>
+    </ol>
+    <div class="row">
+        <div class="col-md-12 column">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Edit user group details </h3> 
+                </div>
+                <form action="/editgroup/<%= edit_group._id %>" method="post">
+                    <div class="row">	
+                        <div class="form-group col-md-4">
+                            <label>Group Name<span class="text-danger">*</span></label>
+                            <input type="text" name="groupname" value="<%= edit_group.group_name %>" required id="groupname" required class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-5">
+                            <div class="input text">
+                                <button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Save</button>
+                                <a href="/user_groups" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Include Footer -->
+<% include templates/footer.ejs %>
+<!--// -->   

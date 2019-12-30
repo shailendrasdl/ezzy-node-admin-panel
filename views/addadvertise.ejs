@@ -1,0 +1,77 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/dashboard">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Advertise Add</li>
+			</ol>
+
+			<div class="row">				
+				<div class="col-md-12 column">				
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Add Advertise details</h3> 
+						</div>							
+						<form action="/addadvertise" method="post" enctype="multipart/form-data">
+							<div class="box-body">
+								<div class="row">	
+									<div class="form-group col-md-6">
+										<label>Image</label><br/>
+										<input type="file" name="image">
+									</div>
+									<div class="form-group col-md-6">
+										<label>URL</label>
+										<input type="url" name="url" class="form-control">
+									</div>
+								</div>
+								<div class="row">	
+									<div class="form-group col-md-6">
+										<label>Set placement</label>
+										<select name="position" class="form-control">
+											<option value=""> -- Select position -- </option>
+											<option value="top">Top of page</option>
+											<option value="bottom">Bottom of page</option>
+										</select>
+									</div>
+									<div class="form-group col-md-6">
+										<label>Set duration</label>
+										<select name="duration" class="form-control">
+											<option value=""> -- Select duration -- </option>
+											<option value="1">1 Day</option>
+											<option value="2">2 Days</option>
+											<option value="3">3 Days</option>
+											<option value="4">4 Days</option>
+											<option value="5">5 Days</option>
+											<option value="6">6 Days</option>
+											<option value="7">7 Days</option>
+											<option value="8">8 Days</option>
+											<option value="9">9 Days</option>
+										</select>
+									</div>
+								</div>	
+								<div class="row">
+									<div class="form-group col-md-5">
+										<div class="input text">
+											<button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Save</button>
+											<a href="/advertising" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

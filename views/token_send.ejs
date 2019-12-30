@@ -1,0 +1,85 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/dashboard">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Token Send</li>
+			</ol>
+
+			<div class="row">				
+				<div class="col-md-12 column">			
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title text-center">EVOAI token mass sending feature</h3> 
+						</div>	
+						<div class="box-body">
+							<div class="row">
+								<div class="form-group col-md-12">
+									<p class="text-dark">Available tokens - <b id="allowance"></b></p>
+									<p class="text-dark">Owner wallet - <b id="owner-wallet"></b></p>
+									<ul class="list-unstyled">
+										<li>1. Max recommended addressess per transaction - 150</li>
+										<li>2. Paste the addressess and amounts</li>
+										<li>3. Separate the items with a comma, as in the example</li>
+										<li>4. Length of receivers and amounts should be equal</li>
+									</ul>
+								</div>
+							</div>
+							<div class="row mb-5">
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="h3" for="receivers">Receivers</label><small>[Separate by comma(,)]</small>
+										<textarea class="form-control" rows="10" id="receivers" placeholder="ex: 0x8573f2f5a3bd960eee3d998473e50c75cdbe6828, 0x6941627cba3518385e75de75d25a189185672bfe"></textarea>
+									</div>
+								</div>
+								<div class="col-sm-6">
+									<div class="form-group">
+										<label class="h3" for="amounts">Amounts</label><small>[Separate by comma(,)]</small>
+										<textarea class="form-control" rows="10" id="amounts" placeholder="ex: 12, 545"></textarea>
+									</div>
+								</div>
+								<div class="col-sm-12">
+									<button id="submit" type="button" onclick="App.startAirdrop()" class="btn btn-info btn-block btn-lg">Submit</button>
+								</div>
+							</div>
+							<div class="row mb-5">
+								<div class="col-sm-12">
+									<p class="h1 text-center mb-5">Transactions</h1>
+								</div>
+								<div class="col-sm-12">
+									<table id="txTable" class="table table-striped">
+										<thead>
+											<tr>
+												<th scope="col">ID</th>
+												<th scope="col">TxHash</th>
+												<th scope="col">Status</th>
+												<th scope="col">Receivers</th>
+												<th scope="col">Tokens Amount</th>
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+		<script src="/js/script/web3.min.js"></script>
+		<script src="/js/script/jquery-3.3.1.min.js"></script>
+		<script src="/js/script/app.js"></script>		
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->   

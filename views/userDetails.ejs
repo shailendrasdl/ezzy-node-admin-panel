@@ -1,0 +1,336 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Users Account</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Users Details
+						</div>
+						<div class="col-md-2">
+							<a href="/users" class="btn btn-info btn-block" title="User">Back</a>
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="nav-tabs-custom">
+						<ul class="nav nav-tabs">
+							<li id="Details" class="active">
+								<span class="btn btn-default" style="cursor:pointer" href="#tab_1" data-toggle="tab">
+									<b>Details</b> 
+								</span>
+							</li>
+							<li id="Referral" >
+								<span class="btn btn-default" style="cursor:pointer" href="#tab_2" data-toggle="tab">
+									<b>Referral</b> 
+								</span>
+							</li>
+						</ul>
+						<div class="tab-content">
+							<!-- Details tab -->
+							<div class="tab-pane active" id="tab_1">
+								<div class="box-body">
+									<div class="row">
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>Username</label>
+												<input name="username" readonly class="form-control number-only" value="<%= edituser_arr.username %>" type="text" id="username">												
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>Email</label>
+												<input name="email" readonly class="form-control number-only" value="<%= edituser_arr.email %>" type="text" id="email">												
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>Reference by</label>
+												<%
+													if(reference_userdetails)
+													{
+														%>
+															<input name="refence_by" readonly class="form-control" value="<%= reference_userdetails.username %>" type="text" id="refence_by">												
+														<%
+													}
+													else
+													{
+														%>
+															<input name="refence_by" readonly class="form-control" type="text" id="refence_by">												
+														<%
+													}
+												%>
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>ETH address</label>
+												<input name="eth_address" readonly class="form-control number-only" value="<%= edituser_arr.eth_address %>"  type="text" id="eth_address">												
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>EVOT Balance</label>
+												<input type="text" readonly class="form-control" id="evot_balance" value="0.00">
+											</div>
+										</div>
+										<div class="form-group col-md-6">
+											<div class="input text">
+												<label>User Groups</label>
+												<div class="row">
+													<%
+														if(usergroup_arr != '') {
+															var s = 1;
+															for(var i=0; i < usergroup_arr.length; i++)
+															{
+																var selected_email_arr_ = [];
+																selected_email_arr_	=	JSON.stringify(usergroup_arr[i].email);
+																if(selected_email_arr_.includes(edituser_arr.email))
+																{
+																	%>
+																		<div class="col-md-4">																
+																			<input type="checkbox" checked id="group_<%= usergroup_arr[i]._id %>" onClick="updateDetails('<%= usergroup_arr[i]._id %>', '<%= edituser_arr.email %>' )" name="group" value="<%= usergroup_arr[i].group_name %>">
+																			<%= usergroup_arr[i].group_name %>
+																		</div>
+																	<%
+																}
+																else
+																{
+																	%>
+																		<div class="col-md-4">																
+																			<input type="checkbox" id="group_<%= usergroup_arr[i]._id %>" onClick="updateDetails('<%= usergroup_arr[i]._id %>', '<%= edituser_arr.email %>' )" name="group" value="<%= usergroup_arr[i].group_name %>">
+																			<%= usergroup_arr[i].group_name %>
+																		</div>
+																	<%
+																}
+																s++;
+															}
+														}
+													%>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--//-->
+							<!-- Details tab -->
+							<div class="tab-pane" id="tab_2">
+								<div class="box-body">
+									<table id="example1" class="table table-bordered table-striped">
+										<thead>
+											<tr>
+												<th>Username</th>
+												<th>Coin</th>
+												<th>Bonus</th>
+											</tr>
+										</thead>
+										<tbody>	
+											<%
+												var userId_array = [];
+												var userid_array = [];
+												if(referral_userlist)
+												{
+													for(var i=0; i < referral_userlist.length; i++)
+													{
+														%>
+															<tr>
+																<td>
+																	<a href="/userDetails/<%= referral_userlist[i]._id %>"><%= referral_userlist[i].username %></a>
+																</td>
+																<td>
+																	<%
+																		if(userid_bonus.length > 0)
+																		{
+																			for(var x=0; x < userid_bonus.length; x++)
+																			{
+																				if(userid_bonus[x].userid_ == referral_userlist[i]._id)
+																				{
+																					%>
+																						<%= userid_bonus[x].usercoin %>
+																					<%
+																				}
+																			}
+																		}
+																		else
+																		{
+																			%>
+																				0.00
+																			<%
+																		}
+																	%>																			
+																</td>																																																								
+																<td>
+																	<span class="ref_bonus_count" id="code_<%= referral_userlist[i]._id %>">
+																		<%
+																			if(userid_bonus.length > 0)
+																			{
+																				for(var x=0; x < userid_bonus.length; x++)
+																				{
+																					if(userid_bonus[x].userid_ == referral_userlist[i]._id)
+																					{
+																						%>
+																							<%= userid_bonus[x].userbonus_ %>
+																						<%
+																					}
+																				}
+																			}
+																			else
+																			{
+																				%>
+																					0.00
+																				<%
+																			}
+																		%>	
+																	</span>																				
+																</td>																
+															</tr>
+														<%
+													}
+												}
+												else
+												{
+													%>
+														<tr>
+															<td>
+																No record found
+															</td>
+														</tr>
+													<%
+												}
+											%>
+											<tr>
+												<td colspan="2">
+													<div class="float-right"><b>Total Bonus</b></div>
+												</td>
+												<td id="ref_bonus_count">	
+													0.00
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2">
+													<div class="float-right"><b>Paid bonus</b></div>
+												</td>
+												<td>	
+													<%= user_paidbonus %>
+												</td>
+											</tr>
+										</tbody>	
+									</table>
+								</div>
+							</div>						
+						</div>						
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<script>
+		function updateDetails(Id, email) {
+			var check_val = '';
+			if($("#group_"+Id).is(":checked"))
+			{
+				check_val = 1;
+			}
+			else {
+				check_val = 0;
+			}
+
+			$.ajax({
+					type: "POST",
+					url: "/updategroupsemail",
+					data: { id: Id, email: email, checked: check_val},
+				}).done(function(res) {
+					if(res.success){
+						req.flash('type', 'Success');
+						req.flash('text_msg', 'Update successful');
+						//res.redirect("/users");
+						// toastr.success('Update successful');
+					}
+					else {
+						console.log('error...ajax');
+					}
+				})
+		}
+	</script>
+	<script>
+		/* ref_bonus_count */
+		$(function() {
+			$("#ref_bonus_count").text(sumColumn());
+		});
+		setInterval(function () {
+		  sumColumn();
+		}, 300);
+		function sumColumn() {
+			var sum = 0;
+			$(".ref_bonus_count").each(function(){
+				sum += parseFloat($(this).text());
+			});
+			sum = (sum).toFixed(2);
+			$("#ref_bonus_count").text(sum);
+			//$("#total_user_bonus").val(sum);
+			//return sum;
+		}
+	
+		web3 = new Web3(new Web3.providers.HttpProvider("https://mainnet.infura.io/v3/baf22b6c2cd84003aa418a653eacecfa"));
+		var eth_address = '<%= edituser_arr.eth_address %>';
+		if(eth_address)
+		{
+			let tokenAddress1 = "0x5dE805154A24Cb824Ea70F9025527f35FaCD73a1";
+			let walletAddress1 = "<%= edituser_arr.eth_address %>";
+			
+			// The minimum ABI to get ERC20 Token balance
+			let minABI = [
+				// balanceOf
+				{
+					"constant":true,
+					"inputs":[{"name":"_owner","type":"address"}],
+					"name":"balanceOf",
+					"outputs":[{"name":"balance","type":"uint256"}],
+					"type":"function"
+				},
+				// decimals
+				{
+					"constant":true,
+					"inputs":[],
+					"name":"decimals",
+					"outputs":[{"name":"","type":"uint8"}],
+					"type":"function"
+				}
+			];
+
+			// Get ERC20 Token contract instance
+			let contract = web3.eth.contract(minABI).at(tokenAddress1);
+
+			// Call balanceOf function
+			contract.balanceOf(walletAddress1, (error, balance) => {
+				// Get decimals
+				contract.decimals((error, decimals) => {
+				// calculate a balance
+				balance = balance.div(10**decimals);
+				var evot_balance = balance;
+					$("#evot_balance").val(evot_balance);
+				});
+			});
+		}
+	</script>
+	<% include templates/footer.ejs %>
+	<!--// -->           

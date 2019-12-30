@@ -1,0 +1,56 @@
+	<%
+		if(users_list != '')
+		{
+			var userList_arr = users_list;
+			for(var i=0; i < users_list.length; i++)
+			{
+				%>
+					<tr>
+						<td><img src="/images/img.png" width="50px" height="50px"></td>
+						<td><%= users_list[i].username %></td>													
+						<td><%= users_list[i].email %></td>	
+						<td>
+							<%
+								var j = 0;
+								for(j; j < userList_arr.length; j++)
+								{
+									if(users_list[i].user_referenced_code == userList_arr[j].user_referral_code)
+									{
+										%>
+											<%= userList_arr[j].username %>
+										<%
+									}
+								}														
+							%>
+						</td>
+						<td>
+							<a href="/userDetails/<%= users_list[i]._id %>">Details</a>
+						</td>
+						<td>
+							<%
+								if(users_list[i].sign_in == true)
+								{
+									%>
+										On
+									<%
+								}
+								else
+								{
+									%>
+										Off
+									<%
+								}
+							%>
+						</td>
+						<td>
+							<a href="/edituser/<%= users_list[i]._id %>">
+								<i class="fas fa-edit text-info"></i>
+							</a>
+							&nbsp;														
+							<i class="fas fa-trash text-danger" onClick="removeDetails('removeuser','<%= users_list[i]._id %>')" style="cursor:pointer"></i>
+						</td>
+					</tr>
+				<%	
+			}
+		}
+	%>		

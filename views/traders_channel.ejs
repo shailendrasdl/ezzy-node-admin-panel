@@ -1,0 +1,120 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<!--Inside traders&influencers -->
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Channel</li>
+  </ol>
+
+  <div class="card mb-3">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-10">
+          <i class="fas fa-table"></i> Channel
+        </div>
+        <div class="col-md-2">
+          <a href="/addchannel" class="btn btn-info btn-block" title="Video">Add New</a>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th> Rank </th>
+              <th> Thumbnail </th>
+              <th> Channel Name </th>
+              <th> Category </th>
+              <th> subscriber </th>
+              <th> Description </th>
+              <th> Rating Review</th>
+              <!-- <th> Review </th> -->
+              <th> Gems </th>
+              <th> Bricks </th>
+              <th> Trust </th>
+              <th> Rating </th>
+              <th> Status </th>
+              <th> Channel Url </th>
+              <th> Action </th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th> Rank </th>
+              <th> Thumbnail </th>
+              <th> Channel Name </th>
+              <th> Category </th>
+              <th> subscriber </th>
+              <th> Description </th>
+              <th> Rating Review</th>
+              <!-- <th> Review </th> -->
+              <th> Gems </th>
+              <th> Bricks </th>
+              <th> Trust </th>
+              <th> Rating </th>
+              <th> Status </th>
+              <th> Channel Url </th>
+              <th> Action </th>
+            </tr>
+          </tfoot>
+          <tbody>
+              <%
+                if(channelDetails != '') {
+                  for(var i=0; i < channelDetails.length; i++) {
+                    %>
+                      <tr>
+                        <td> <%= channelDetails[i].rank %> </td>
+                        <td><img src="<%= channelDetails[i].thumbnails %>" width="100" height="auto"></img></td>
+                        <td> <%= channelDetails[i].channel_name %> </td>
+                        <td> <%= (channelDetails[i].category)%> </td>
+                        <td> <%= channelDetails[i].subscriber%> </td>
+                        <td> <%= channelDetails[i].description%> </td>
+                        <td> <%= channelDetails[i].rating_review%> </td>
+                        <!-- <td> <%= channelDetails[i].review%> </td> -->
+                        <td> <%= channelDetails[i].gems%> </td>
+                        <td> <%= channelDetails[i].bricks%> </td>
+                        <td> <%= channelDetails[i].trust%> </td>
+                        <td> <%= channelDetails[i].rating%> </td>
+                        <td>
+                          <%
+                            if(channelDetails[i].status == true) {
+                              %>
+                                Active
+                              <%
+                            }
+                            else {
+                              %>
+                                Inactive
+                              <%
+                            }
+                          %>
+                        </td>
+                        <td> <%= channelDetails[i].channel_url %> </td>
+                        <td>
+                          <a href="/editchannel/<%= channelDetails[i]._id %>">
+                            <i class="fas fa-edit text-info"></i>
+                          </a>
+                          &nbsp;														
+                          <i class="fas fa-trash text-danger" onClick="removeDetails('removechannel','<%= channelDetails[i]._id %>')" style="cursor:pointer"></i>
+                        </td>
+                      </tr>
+                    <%	
+                  }
+                }
+              %>
+            </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer-->
+<% include templates/footer.ejs %>

@@ -1,0 +1,79 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Blogs</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Blogs
+						</div>
+						<div class="col-md-2">
+							<a href="/addblog" class="btn btn-info btn-block" title="Blog">Add New</a>
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Title</th>
+									<th>Created date</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>Title</th>
+									<th>Created date</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									if(blog_result != '')
+									{
+										for(var i=0; i < blog_result.length; i++)
+										{
+											%>
+												<tr>		
+													<td><%= blog_result[i].title %></td>													
+													<td><%= blog_result[i].created_at %></td>													
+													<td><%= blog_result[i].status %></td>																										
+													<td>		
+														<a href="/editblog/<%= blog_result[i]._id %>">
+															<i class="fas fa-edit text-info"></i>
+														</a>
+														&nbsp;	
+														<i class="fas fa-trash text-danger" onClick="removeDetails('removeblog','<%= blog_result[i]._id %>')" style="cursor:pointer"></i>
+													</td>
+												</tr>
+											<%	
+										}
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

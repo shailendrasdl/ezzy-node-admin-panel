@@ -1,0 +1,96 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Support</li>
+			</ol>
+
+			<div class="card mb-3">
+				<div class="card-header">
+					<div class="row">
+						<div class="col-md-10">
+							<i class="fas fa-table"></i> Support
+						</div>
+					</div>	
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table" id="dataTable" width="100%" cellspacing="0">
+							<thead>
+								<tr>
+									<th>Ticket</th>
+									<th>Email</th>
+									<th>Subject</th>
+									<th>Message</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tfoot>
+								<tr>
+									<th>&nbsp;</th>
+									<th>Email</th>
+									<th>Subject</th>
+									<th>Message</th>
+									<th>Status</th>
+									<th>Action</th>
+								</tr>
+							</tfoot>
+							<tbody>
+								<%
+									if(support_result != '')
+									{
+										var x = 1;
+										for(var i=0; i < support_result.length; i++)
+										{
+											%>
+												<tr>
+													<td>
+														<a href="/supportchat/<%= support_result[i]._id %>"><%= x++; %></a>
+													</td>			
+													<td><%= support_result[i].email %></td>													
+													<td><%= support_result[i].subject %></td>													
+													<td><%= support_result[i].message %></td>													
+													<td>
+														<%
+															if(support_result[i].status == true)
+															{
+																%>
+																	Completed
+																<%
+															}
+															else
+															{
+																%>
+																	Pending
+																<%
+															}
+														%>
+													</td>
+													<td>													
+														<i class="fas fa-trash text-danger" onClick="removeDetails('removesupport','<%= support_result[i]._id %>')" style="cursor:pointer"></i>
+													</td>
+												</tr>
+											<%	
+										}
+									}
+								%>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

@@ -1,0 +1,125 @@
+<!-- Header -->
+<% include templates/header.ejs %>
+<!-- Sidebar -->
+<% include templates/sidebar.ejs %>
+<!--Inside Edit Channel -->
+<div class="container-fluid">
+  <!-- Breadcrumbs-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a href="/">Dashboard</a>
+    </li>
+    <li class="breadcrumb-item active">Channel</li>
+  </ol>
+  <div class="row">
+    <div class="col-md-12 column">
+      <div class="box box-primary">
+        <div class="box-header">
+          <h3 class="box-title">Edit Channel Details</h3>
+        </div>
+        <form action="/editchannel/<%= updateChannelDetail._id %>" method="post">
+          <div class="box-body">
+            <div class="row">              
+              <div class="form-group col-md-3">
+                <label>Channel Name<span class="text-danger"></span></label>
+                <input type="text" name="channelname" id="channelname" value="<%= updateChannelDetail.channel_name%>" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Channel Url<span class="text-danger"></span></label>
+                <input type="text" name="channel_url" id="channel_url" value="<%= updateChannelDetail.channel_url%>" required class="form-control">
+              </div>
+
+			        <div class="form-group col-md-3">
+                <label>Thumbnails<span class="text-danger"></span></label>
+                <input type="text" name="thumbnails" id="thumbnails" value="<%= updateChannelDetail.thumbnails%>" required class="form-control">
+              </div>
+
+			        <div class="form-group col-md-3">
+                <label>Subscriber<span class="text-danger"></span></label>
+                <input type="text" name="subscriber" id="subscriber" value="<%= updateChannelDetail.subscriber%>" required class="form-control">
+              </div>
+	
+			        <div class="form-group col-md-3">
+                <label>Rank<span class="text-danger"></span></label>
+                <input type="text" name="rank" id="rank" value="<%= updateChannelDetail.rank%>" required class="form-control">
+              </div>
+
+              <div class="form-group col-md-3">
+                <label>Gems<span class="text-danger"></span></label>
+                <input type="text" name="gems" id="gems" value="<%= updateChannelDetail.gems%>" required class="form-control">
+              </div>
+
+			        <div class="form-group col-md-3">
+                <label>Bricks<span class="text-danger"></span></label>
+                <input type="text" name="bricks" id="bricks" value="<%= updateChannelDetail.bricks%>" required class="form-control">
+              </div>
+
+			      <div class="form-group col-md-3">
+              <label>Select category</label><br/>
+              <select class="form-control" name="categoryname">
+                <% if(category.length > 0){
+                  category.forEach(function(row){
+                %>
+                <option value="<%= row.name %>"> <%= row.name %> </option>
+                <% }) } %>
+              </select>
+            </div>
+			
+            <div class="form-group col-md-3">
+              <label>Trust<span class="text-danger"></span></label>
+              <select name="trust" id="trust" class="form-control">
+                <option value="0.5" <%= (updateChannelDetail.reputation == 0.5)?"selected":"" %>>0.5</option>
+                <option value="1" <%= (updateChannelDetail.reputation == 1)?"selected":"" %>>1</option>
+                <option value="1.5" <%= (updateChannelDetail.reputation == 1.5)?"selected":"" %>>1.5</option>
+                <option value="2" <%= (updateChannelDetail.reputation == 2)?"selected":"" %>>2</option>
+                <option value="2.5" <%= (updateChannelDetail.reputation == 2.5)?"selected":"" %>>2.5</option>
+                <option value="3" <%= (updateChannelDetail.reputation == 3)?"selected":"" %>>3</option>
+                <option value="3.5" <%= (updateChannelDetail.reputation == 3.5)?"selected":"" %>>3.5</option>
+                <option value="4" <%= (updateChannelDetail.reputation == 4)?"selected":"" %>>4</option>
+                <option value="4.5" <%= (updateChannelDetail.reputation == 4.5)?"selected":"" %>>4.5</option>
+                <option value="5" <%= (updateChannelDetail.reputation == 5)?"selected":"" %>>5</option>
+              </select>
+			      </div>
+
+            <div class="form-group col-md-3">
+              <label>Rating<span class="text-danger"></span></label>
+              <input type="text" name="rating" id="rating" value="<%= updateChannelDetail.rating%>" required class="form-control">
+            </div>
+
+           <div class="form-group col-md-3">
+              <label>Status</label><br/>
+              <select class="form-control" name="status" id="status">
+                <option value="true" <%= (updateChannelDetail.status == true)?"selected":"" %>>Active</option>
+                <option value="false" <%= (updateChannelDetail.status == false)?"selected":"" %>>Inactive</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Description<span class="text-danger"></span></label>
+              <textarea cols="50" maxlength="600" name="description" id="description" value="<%= updateChannelDetail.description%>" required class="form-control"><%= updateChannelDetail.description%></textarea>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label>Rating Review<span class="text-danger"></span></label>
+              <textarea cols="50" maxlength="600" name="rating_review" id="rating_review" value="<%= updateChannelDetail.rating_review%>" required class="form-control"><%= updateChannelDetail.rating_review%></textarea>
+            </div>
+
+
+            </div>
+            <div class="row">
+              <div class="form-group col-md-5">
+                <div class="input text">
+                  <button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Update</button>
+                  <a href="/traders_channel" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer-->
+<% include templates/footer.ejs %>

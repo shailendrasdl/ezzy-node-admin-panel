@@ -1,0 +1,102 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/dashboard">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Blog Add</li>
+			</ol>
+
+			<div class="row">				
+				<div class="col-md-12 column">				
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Add blog details</h3> 
+						</div>							
+						<form action="/addblog" method="post" enctype="multipart/form-data">
+							<div class="box-body">
+								<div class="row">	
+									<div class="form-group col-md-4">
+										<label>Title<span class="text-danger">*</span></label>
+										<input type="text" name="title" required id="title" required class="form-control">
+									</div>
+									<div class="form-group col-md-4">
+										<label>URL Title<span class="text-danger">*</span><sub>there must be NO spaces between words</sub></label>
+										<input type="text" name="url_title" required id="url_title" required class="form-control">
+									</div>
+									<div class="form-group col-md-4">
+										<label>Status</label>
+										<select name="status" class="form-control">
+											<option value="published">Live</option>
+											<option value="draft" selected="selected">Draft</option>
+										</select>
+									</div>
+								</div>
+								<div class="row">	
+									<div class="form-group col-md-6">
+										<label>Categories<span class="text-danger">*</span></label><br>
+										<sub>Choose any categories. To choose multiple categories press CMD/CTRL + Click your choices.</sub>
+										<select name="category_name[]" class="form-control" multiple>
+											<%
+												if(category_result.length > 0)
+												{
+													for(var i=0; i< category_result.length; i++)
+													{
+														%>
+															<option value="<%= category_result[i]._id %>"><%= category_result[i].name %></option>
+														<%
+													}
+												}
+												else
+												{
+													%>
+														<option value=""> No option found </option>
+													<%
+												}
+											%>
+										</select>
+									</div>
+									<div class="form-group col-md-3">
+										<label>Feature Image<span class="text-danger">*</span></label><br><br>
+										<input type="file" name="feature_image" id="fileUpload">
+									</div>
+									<div class="form-group col-md-3">
+										<label>&nbsp;</label><br><br>
+										<div id="image-holder"></div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-6">
+										<label>Content</label>
+										<textarea name="content" class="form-control"></textarea>
+									</div>
+									<div class="form-group col-md-6">
+										<label>Excerpt</label>
+										<textarea name="excerpt" class="form-control"></textarea>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group col-md-5">
+										<div class="input text">
+											<button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Save</button>
+											<a href="/blogs" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           

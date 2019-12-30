@@ -1,0 +1,190 @@
+<% include templates/header.ejs %>
+<% include templates/sidebar.ejs %>
+<div class="container-fluid">
+    <!-- Breadcrumbs-->
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="/">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Dapps</li>
+    </ol>
+    
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <i class="fas fa-table"></i> Dapps Details
+                </div>
+                <div class="col-md-2">
+                    <a href="/dapps" class="btn btn-info btn-block" title="User">Back</a>
+                </div>
+            </div>	
+        </div>
+        <div class="card-body">
+            <form action="/changeStatus/<%= editdapps_arr._id %>" method="post">
+                <div class="box-body">
+                    <div class="row">
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Dappname</label>
+                                <input name="dappname" type="text" id="username" readonly value="<%= editdapps_arr.dappName %>" class="form-control number-only">												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Email</label>
+                                <input name="email" type="text" id="email" readonly value="<%= editdapps_arr.email %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Telegram</label>
+                                <input name="telegram" type="text" id="telegram" readonly value="<%= editdapps_arr.telegram %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Website</label>
+                                <input name="website" type="text" id="website" readonly value="<%= editdapps_arr.website %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Category</label>
+                                <input name="category" type="text" id="category" readonly value="<%= editdapps_arr.category %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Network Select</label>
+                                <input name="networkselect" type="text" id="networkselect" readonly value="<%= editdapps_arr.networkSelect %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Addtional Link</label>
+                                <input name="additionalLink" type="text" id="additionalLink" readonly value="<%= editdapps_arr.additionalLink %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Description</label>
+                                <input name="description" type="text" id="description" readonly value="<%= editdapps_arr.description %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Description</label>
+                                <input name="description" type="text" id="description" readonly value="<%= editdapps_arr.description %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Title</label>
+                                <input name="title" type="text" id="title" readonly value="<%= editdapps_arr.title %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Contract Address</label>
+                                <input name="contractaddress" type="text" id="contractaddress" readonly value="<%= editdapps_arr.contractAddress %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Video Url</label>
+                                <input name="videourl" type="text" id="videourl" readonly value="<%= editdapps_arr.videoUrl %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Trx History Seven Days</label>
+                                <input name="trxhistorysevendays" type="text" id="trxhistorysevendays" readonly value="<%= editdapps_arr.trxHistorySevenDays %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Volume 7Days Usd</label>
+                                <input name="volume7DaysUsd" type="text" id="volume7DaysUsd" readonly value="<%= editdapps_arr.volume7DaysUsd %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Volume 1Day Usd</label>
+                                <input name="volume1DayUsd" type="text" id="volume1DayUsd" readonly value="<%= editdapps_arr.volume1DayUsd %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Volume Change 1Day Data</label>
+                                <input name="volumeChange1DayData" type="text" id="volumeChange1DayData" readonly value="<%= editdapps_arr.volumeChange1DayData %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>user Change 1Day Data</label>
+                                <input name="userChange1DayData" type="text" id="userChange1DayData" readonly value="<%= editdapps_arr.userChange1DayData %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Volume Percentage Change</label>
+                                <input name="volumePercentageChange" type="text" id="volumePercentageChange" readonly value="<%= editdapps_arr.volumePercentageChange %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>User Percentage Change</label>
+                                <input name="userPercentageChange" type="text" id="userPercentageChange" readonly value="<%= editdapps_arr.userPercentageChange %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Contract Balance</label>
+                                <input name="contractBalance" type="text" id="contractBalance" readonly value="<%= editdapps_arr.contractBalance %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Users One Hours</label>
+                                <input name="usersOneHours" type="text" id="usersOneHours" readonly value="<%= editdapps_arr.usersOneHours %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>volume One Hours</label>
+                                <input name="volumeOneHours" type="text" id="volumeOneHours" readonly value="<%= editdapps_arr.volumeOneHours %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Volume Seven Days</label>
+                                <input name="volumeSevenDays" type="text" id="volumeSevenDays" readonly value="<%= editdapps_arr.volumeSevenDays %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Trans One Hours</label>
+                                <input name="transOneHours" type="text" id="transOneHours" readonly value="<%= editdapps_arr.transOneHours %>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <div class="input text">
+                                <label>Trans Seven Days</label>
+                                <input name="transSevenDays" type="text" id="transSevenDays" readonly value="<%= editdapps_arr.transSevenDays%>" class="form-control number-only" >												
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6 offset-md-4">
+                            <input type="radio" value="true"  name="status" id="acceptedfield" ><strong>Accept</strong>&nbsp;&nbsp;
+                            <input type="radio" value="false" name="status" id="unacceptedfield"><strong>Unaccept</strong>&nbsp;&nbsp;
+                            <button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i>Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<% include templates/footer.ejs %>

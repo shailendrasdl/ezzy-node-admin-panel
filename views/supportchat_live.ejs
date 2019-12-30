@@ -1,0 +1,47 @@
+<%
+	if(supportChat_list)
+	{
+		for(var i=0; i < supportChat_list.length; i++)
+		{
+			if(supportChat_list[i].to_id == 0)
+			{
+				%>
+					<div class="incoming_msg">
+						<div class="incoming_msg_img"> 
+							<img src="https://ptetutorials.com/images/user-profile.png" alt="" width="50px" height="50px"> 
+						</div>
+						<div class="received_msg">
+							<div class="received_withd_msg">
+								 
+								<p>
+									<%- supportChat_list[i].message %>
+								</p>
+								<span class="time_date"> <%= supportChat_list[i].created_at %></span>
+							</div>
+						</div>
+					</div>
+				<%
+			}
+			else
+			{
+				%>
+					<div class="outgoing_msg">
+						<div class="sent_msg">																														
+							<p>
+								<%- supportChat_list[i].message %>
+							</p>
+							<span class="time_date"> <%= supportChat_list[i].created_at %></span> 
+						</div>
+					</div>
+				<%
+			}
+		}
+	}
+	else
+	{
+		%>
+			No record found
+		<%
+	}
+%>
+<p id="lastClass"></p>

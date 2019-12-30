@@ -1,0 +1,460 @@
+<script>
+    var evabotContractInstance = '';
+    var userAddress = '';
+
+    window.addEventListener('load', async () => {
+        
+        if (window.ethereum) {
+            window.web3 = new Web3(ethereum);
+            try {
+                await ethereum.enable();
+                userAddress = web3.eth.accounts[0];
+                web3.eth.defaultAccount = userAddress;        
+                const Evabot = web3.eth.contract(beta4_contract_abi);
+                evabotContractInstance = Evabot.at(beta4_contract_addr);
+                                    
+                const TokenContract = web3.eth.contract(token_abi);
+                tokenInstance = TokenContract.at(token_addr);
+    
+                ethereum.on('accountsChanged', function (accounts) {
+                    // Time to reload your interface with accounts[0]!
+                    userAddress = web3.eth.accounts[0];
+                    location.reload();
+                })
+            } catch(e) {
+                console.log(e);
+            }
+        } else if(window.web3) {
+            window.web3 = new Web3(web3.currentProvider);
+            userAddress = web3.eth.accounts[0];
+            web3.eth.defaultAccount = userAddress;        
+            const Evabot = web3.eth.contract(beta4_contract_abi);
+            evabotContractInstance = Evabot.at(beta4_contract_addr);
+            
+            
+            const TokenContract = web3.eth.contract(token_abi);
+            tokenInstance = TokenContract.at(token_addr);
+        }
+    });
+
+    // init to interact with contract
+    try {
+        userAddress = web3.eth.accounts[0];
+        web3.eth.defaultAccount = userAddress;        
+        const Evabot = web3.eth.contract(beta4_contract_abi);
+        evabotContractInstance = Evabot.at(beta4_contract_addr);
+        
+        const TokenContract = web3.eth.contract(token_abi);
+        tokenInstance = TokenContract.at(token_addr);
+    } catch (e) {
+        console.log('Web3 does not exist');
+    }
+    
+    // wait while mining the transaction
+    function waitForReceipt(hash, cb) {
+        web3.eth.getTransactionReceipt(hash, (err, receipt) => {
+            if (err) {
+                cb(err);
+            }
+
+            if (receipt !== null) {
+                // Transaction went through
+                if (cb) {
+                    cb(receipt);
+                }
+            } else {
+                // Try again in 1 second
+                setTimeout( () => {
+                    waitForReceipt(hash, cb);
+                }, 1000);
+            }
+        });
+    }
+
+    // confirm if the transaction is mined by txHash
+    function confirmTransactionDeployed(txHash) {
+        return new Promise((resolve, reject) => {
+            waitForReceipt(txHash, (receipt) => {
+                resolve(receipt);
+            });
+        });
+    }
+
+    // get eth bot active investment
+    function getEthBotActiveInvestment() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.getCurrentActiveInvestments(function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+
+    // get cycle id
+    function getCurrentCycleId() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.getCurrentCycleId(function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+
+    // get cycle data
+    function getCycleData(cycleId) {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.getCycleData(cycleId, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+
+    // pause contract
+    function pauseContract() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.pause({gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+
+    // resume contract
+    function resumeContract() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.resume({gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        } 
+    }
+
+    // transfer ownership
+    function transferOwnership() {
+        try {
+            var address = prompt('Input the address to transfer ownership', '');
+            if(address == '') {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.transferOwnership(address, {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // set max ether bot limit
+    function setEtherBotMaxLimit() {
+        try {
+            var newLimit = prompt('Input a new ether bot max limit.', '0');
+            if(newLimit == '' || newLimit == 0) {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.setEtherBotMaxLimit(web3.toWei(newLimit, 'ether'), {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // set max evot bot limit
+    function setEvotBotMaxLimit() {
+        try {
+            var newLimit = prompt('Input a new evot bot max limit.', '0');
+            if(newLimit == '' || newLimit == 0) {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.setEvotBotMaxLimit(web3.toWei(newLimit, 'ether'), {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    
+    // set min ether  bot limit
+    function setEtherBotMinLimit() {
+        try {
+            var newLimit = prompt('Input a new ether bot min limit.', '0');
+            if(newLimit == '' || newLimit == 0) {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.setEtherBotMinLimit(web3.toWei(newLimit, 'ether'), {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // set min evot  bot limit
+    function setEvotBotMinLimit() {
+        try {
+            var newLimit = prompt('Input a new evot bot min limit.', '0');
+            if(newLimit == '' || newLimit == 0) {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.setEvotBotMinLimit(web3.toWei(newLimit, 'ether'), {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // start cycle
+    function startCycle() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.startCycle({gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // stop cycle
+    async function stopCycle() {
+        var ether_amount = prompt('Input ETH amount.', '0');
+        var evot_amount = prompt('Input EVOT amount.', '0');
+        if (ether_amount == '' || ether_amount == '0' || evot_amount == '' || evot_amount == '0') {
+            return false;
+        }
+        if(!confirm('Ether: ' + ether_amount + ', Evot: ' + evot_amount)) {
+            return false;
+        }
+        var is_enough_token = await tokenBalanceFromTokenContract();
+        var token_balance = Number(is_enough_token.toString());
+        if(token_balance < Number(web3.toWei(evot_amount, 'ether'))) {
+            alert('You have insufficient tokens.');
+            return false;
+        }
+
+        var allowance = await tokenAllowance();
+        console.log(allowance.toString() / 10**18)
+        // if allowance balance is less than amount, user has to approve
+        if (Number(allowance.toString()) < Number(web3.toWei(evot_amount, 'ether'))) {
+            // the quantity of approve
+            var hash = await tokenApprove(Number(web3.toWei(evot_amount, 'ether')));
+            console.log('hash: ' + hash);
+            var result = await confirmTransactionDeployed(hash);
+        
+            // if success the approve
+            if(result['status'] == '0x1') {
+                try {
+                    return new Promise((resolve, reject) => {
+                        evabotContractInstance.stopCycle(web3.toWei(ether_amount, 'ether'), web3.toWei(evot_amount, 'ether'), {from: userAddress, gas: 300000, value: web3.toWei(ether_amount,'ether')}, function(e, r) {
+                            if (e) {
+                                reject(e);
+                            }
+                            resolve(r);
+                        });
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
+            } else {
+                // approve failed
+                alert('approve failed, try again.');
+            }
+        } else {
+            try {
+                return new Promise((resolve, reject) => {
+                    evabotContractInstance.stopCycle(web3.toWei(ether_amount, 'ether'), web3.toWei(evot_amount, 'ether'), {from: userAddress, gas: 300000, value: web3.toWei(ether_amount,'ether')}, function(e, r) {
+                        if (e) {
+                            reject(e);
+                        }
+                        resolve(r);
+                    });
+                });
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    }
+
+    // get the token balance from token contract address by user
+    function tokenBalanceFromTokenContract() {
+        try {
+            return new Promise((resolve, reject) => {
+                tokenInstance.balanceOf(userAddress, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }   
+    }
+    
+    // get the token allowance balance by users
+    function tokenAllowance() {
+        try {
+            return new Promise((resolve, reject) => {
+                tokenInstance.allowance(userAddress, beta4_contract_addr, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+    
+    // users have to token approve before call the deposit token function
+    function tokenApprove(amount) {
+        try {
+            return new Promise((resolve, reject) => {
+                tokenInstance.approve(beta4_contract_addr, amount, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }    
+    }
+
+    function getLimits() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.getLimits(function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // check if cycle is opened
+    function doesCycleOpened() {
+        try {
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.doesCycleOpened(function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    alert(r);
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // block user
+    function blockUser() {
+        try {
+            var address = prompt('Input user address to block.', '');
+            if(address == '') {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.blockUser(address, {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    // unblock user
+    function unblockUser() {
+        try {
+            var address = prompt('Input user address to block.', '');
+            if(address == '') {
+                return false;
+            }
+            return new Promise((resolve, reject) => {
+                evabotContractInstance.unblockUser(address, {gas: 300000}, function(e, r) {
+                    if (e) {
+                        reject(e);
+                    }
+                    resolve(r);
+                });
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
+</script>

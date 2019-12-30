@@ -1,0 +1,340 @@
+	<!-- Sidebar -->
+	<ul class="sidebar navbar-nav">
+		<li class="nav-item" id="Dashboard">
+			<a class="nav-link" href="/dashboard">
+				<i class="fas fa-fw fa-tachometer-alt"></i>
+				<span>Dashboard</span>
+			</a>
+		</li>
+		<% /*
+			if(adminpermition.includes('Marketer'))
+			{
+				%>
+				<%
+			}
+			*/
+		%>
+		<%
+			if(adminpermition.includes('Admin'))
+			{
+				%>
+					<!-- Users -->
+					<li class="nav-item dropdown users usersrole access_role userGroups">
+						<a class="nav-link dropdown-toggle" href="#" id="Users_" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-users"></i>
+							<span>Users</span>
+						</a>
+						<div class="dropdown-menu access_role" aria-labelledby="Users_">
+							<!-- Admin access -->						
+							<a class="dropdown-item" href="/adminaccess">
+								<i class="fas fa-fw fa-user"></i>
+								<span>Admin access</span>
+							</a>
+							<!-- // -->
+							<!-- User role -->						
+							<a class="dropdown-item usersrole" href="/userrole">
+								<i class="fas fa-fw fa-flag"></i>
+								<span>Roles</span>
+							</a>
+							<!-- // -->
+							<!-- Userbase -->
+							<a class="dropdown-item users" href="/users/1">
+								<i class="fas fa-fw fa-users"></i>
+								<span>Users management</span>
+							</a>
+							<!-- // -->
+							<!-- Groups -->
+							<a class="dropdown-item userGroups" href="/user_groups">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Groups</span>
+							</a>
+							<!--//-->
+						</div>
+					</li>	
+					<!--// -->
+					<!-- Content -->
+					<li class="nav-item dropdown traders">
+						<a class="nav-link dropdown-toggle" href="#" id="Content_" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-th-list"></i>
+							<span>Content</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="Content_">							
+							<a class="dropdown-item">
+								<span>Traders Influencers</span>
+							</a>
+							<a class="dropdown-item" href="/traders_category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+							<a class="dropdown-item" href="/traders_channel">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Channel</span>
+							</a>
+						</div>
+					</li>	
+					<!--// -->
+					<!-- Bots -->
+					<li class="nav-item dropdown evabot">
+						<a class="nav-link dropdown-toggle" href="#" id="Bots_" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-th-list"></i>
+							<span>Bots</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="Bots_">							
+							<a class="dropdown-item" href="/evabot">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Evabot</span>
+							</a>
+						</div>
+					</li>	
+					<!-- // -->
+					<!-- Advertising -->
+					<li class="nav-item dropdown advertising">
+						<a class="nav-link dropdown-toggle" href="#" id="Advertising_" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-th-list"></i>
+							<span>Advertising</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="Advertising_">							
+							<a class="dropdown-item" href="/advertising">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Advertising</span>
+							</a>
+						</div>
+					</li>	
+					<!-- // -->
+					<!-- Marketing -->
+					<li class="nav-item dropdown announcement marketing blogs">
+						<a class="nav-link dropdown-toggle" href="#" id="Marketing_" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-th-list"></i>
+							<span>Marketing</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="Marketing_">							
+							<a class="dropdown-item">
+								<span><b>Announcement</b></span>
+							</a>
+							<a class="dropdown-item" href="/announcement">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Announcement list</span>
+							</a>
+							<a class="dropdown-item" href="/announ_category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+							<hr>
+							<a class="dropdown-item" href="/press_releases">
+								<span><b>Press releases</b></span>
+							</a>
+							<hr>
+							<a class="dropdown-item">
+								<span><b>Blogs</b></span>
+							</a>
+							<a class="dropdown-item" href="/blogs">
+								<i class="fas fa-fw fa-envelope"></i>
+								<span>Blog list</span>
+							</a>
+							<a class="dropdown-item" href="/category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+							<hr>
+							<a class="dropdown-item">
+								<span><b>Emails</b></span>
+							</a>
+							<a class="dropdown-item" href="/recipientlists">
+								<i class="fas fa-fw fa-envelope"></i>
+								<span>Email marketing</span>
+							</a>
+						</div>
+					</li>	
+				<%
+				if(adminpermition.includes('Admin') || adminpermition.includes('Support'))
+				{
+					%>
+						<li class="nav-item" id="support">
+							<a class="nav-link" href="/support">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Support</span>
+							</a>
+						</li>							
+					<%
+				}
+				%>
+					<!-- Tokens -->
+					<li class="nav-item dropdown traders">
+						<a class="nav-link dropdown-toggle" href="#" id="token_send" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-th-list"></i>
+							<span>Tokens</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="token_send">							
+							<a class="dropdown-item" href="/evotbonus">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Value & bonus</span>
+							</a>
+							<a class="dropdown-item" href="/token_send">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Mass send</span>
+							</a>
+						</div>
+					</li>	
+				<%
+				if(adminpermition.includes('Admin'))
+				{
+					%>
+						<li class="nav-item" id="dapps">
+							<a class="nav-link" href="/dapps">
+								<i class="fas fa-th"></i>
+								<span>Dapps</span>
+							</a>
+						</li>
+					<%
+				}
+			}
+		
+		
+			/* 
+			if(adminpermition.includes('Admin'))
+			{
+				%>				
+					<li class="nav-item" id="banner">
+						<a class="nav-link" href="/banner">
+							<i class="fas fa-fw fa-tag"></i>
+							<span>Banner</span>
+						</a>
+					</li>					
+					<li class="nav-item" id="access_role">
+						<a class="nav-link" href="/adminaccess">
+							<i class="fas fa-fw fa-user"></i>
+							<span>Admin access role</span>
+						</a>
+					</li>	
+					<li class="nav-item" id="users">
+						<a class="nav-link" href="/users/1">
+							<i class="fas fa-fw fa-users"></i>
+							<span>Users management</span>
+						</a>
+					</li>
+					<li class="nav-item dropdown" id="announcement">
+						<a class="nav-link dropdown-toggle" href="#" id="announcementDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-folder"></i>
+							<span>Announcement</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="announcementDropdown">
+							<a class="dropdown-item" href="/announcement">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Announcement list</span>
+							</a>
+							<a class="dropdown-item" href="/announ_category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+						</div>
+					</li>			
+					<li class="nav-item" id="evotbonus">
+						<a class="nav-link" href="/evotbonus">
+							<i class="fas fa-fw fa-tag"></i>
+							<span>Evot Value & Bonus</span>
+						</a>
+					</li>
+					<li class="nav-item" id="token_send">
+						<a class="nav-link" href="/token_send">
+							<i class="fas fa-fw fa-tag"></i>
+							<span>Mass Token Send</span>
+						</a>
+					</li>
+				<%
+			}
+			if(adminpermition.includes('Admin') || adminpermition.includes('Marketer'))
+			{
+				%>
+					<li class="nav-item dropdown" id="marketing">
+						<a class="nav-link dropdown-toggle" href="#" id="maketingDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-folder"></i>
+							<span>Marketing</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="maketingDropdown">
+							<a class="dropdown-item" href="/recipientlists">
+								<i class="fas fa-fw fa-envelope"></i>
+								<span>Email marketing</span>
+							</a>
+							<a class="dropdown-item" href="/advertising">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Advertising</span>
+							</a>
+							<a class="dropdown-item" href="/press_releases">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Press releases</span>
+							</a>
+						</div>
+					</li>						
+				<%
+			}
+			if(adminpermition.includes('Admin') || adminpermition.includes('Blogger'))
+			{
+				%>
+					<li class="nav-item dropdown" id="blogs">
+						<a class="nav-link dropdown-toggle" href="#" id="blogsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-folder"></i>
+							<span>Blogs</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="blogsDropdown">
+							<a class="dropdown-item" href="/blogs">
+								<i class="fas fa-fw fa-envelope"></i>
+								<span>Blog list</span>
+							</a>
+							<a class="dropdown-item" href="/category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+						</div>
+					</li>					
+				<%
+			}
+			if(adminpermition.includes('Admin') || adminpermition.includes('Support'))
+			{
+				%>
+					<li class="nav-item" id="support">
+						<a class="nav-link" href="/support">
+							<i class="fas fa-fw fa-tag"></i>
+							<span>Support</span>
+						</a>
+					</li>							
+				<%
+			}
+			if(adminpermition.includes('Admin'))
+			{
+				%>
+					<li class="nav-item dropdown" id="traders">
+						<a class="nav-link dropdown-toggle" href="#" id="tradersDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<i class="fas fa-fw fa-folder"></i>
+							<span>Traders Influencers</span>
+						</a>
+						<div class="dropdown-menu" aria-labelledby="tradersDropdown">
+							<a class="dropdown-item" href="/traders_category">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Category</span>
+							</a>
+							<a class="dropdown-item" href="/traders_channel">
+								<i class="fas fa-fw fa-tag"></i>
+								<span>Channel</span>
+							</a>
+						</div>
+					</li>
+				<%
+			}						
+			*/
+		%><br><br><br>
+		<!--
+		<li class="nav-item" id="email_manager">
+			<a class="nav-link" href="/sendemail">
+				<i class="fas fa-fw fa-envelope"></i>
+				<span>Email manager</span>
+			</a>
+		</li>	
+		<li class="nav-item" id="userReferral">
+			<a class="nav-link" href="/userReferral">
+				<i class="fas fa-fw fa-users"></i>
+				<span>Referral User</span>
+			</a>
+		</li>
+		-->				
+	</ul>	
+	<div id="content-wrapper">

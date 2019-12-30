@@ -1,0 +1,70 @@
+	<!-- Header -->
+	<% include templates/header.ejs %>
+	<!--// -->
+	<!-- Sidebar -->
+	<% include templates/sidebar.ejs %>
+	<!--// -->       
+		<div class="container-fluid">
+			<!-- Breadcrumbs-->
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="/dashboard">Dashboard</a>
+				</li>
+				<li class="breadcrumb-item active">Banner</li>
+			</ol>
+
+			<div class="row">				
+				<div class="col-md-12 column">				
+					<div class="box box-primary">
+						<div class="box-header">
+							<h3 class="box-title">Edit Banner Details</h3> 
+						</div>							
+						<form action="/editbanner/<%= edit_banner._id %>" method="post" enctype="multipart/form-data">
+							<div class="box-body">
+								<div class="row">	
+									<%
+										if(edit_banner.image)
+										{
+											%>											
+												<div class="form-group col-md-3">
+													<label>Selected</label><br/>
+													<img src="/uploads/<%= edit_banner.image %>" width="100px" height="auto">
+												</div>
+											<%
+										}
+									%>
+									<div class="form-group col-md-3">
+										<label>Image</label><br/>
+										<input type="file" name="image" id="fileUpload">
+									</div>
+									<div class="form-group col-md-3">
+										<label>Status</label><br/>
+										<select class="form-control" name="status" id="status">
+											<option value="true" <%= (edit_banner.status == true)?"selected":"" %>>Active</option>
+											<option value="false" <%= (edit_banner.status == false)?"selected":"" %>>Inactive</option>
+										</select>
+									</div>
+									<div class="form-group col-md-6">
+										<label>&nbsp;</label><br/>
+										<div id="image-holder"></div>
+									</div>
+								</div>													
+								<div class="row">
+									<div class="form-group col-md-5">
+										<div class="input text">
+											<button class="btn btn-success btn-sm" type="submit" ><i class="fas fa-fw fa-save"></i> Update</button>
+											<a href="/banner" class="btn btn-warning btn-sm"><i class="fas fa-fw fa-ban"></i> Cancel</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			
+        </div>
+        <!-- /.container-fluid -->
+	<!-- Footer -->
+	<% include templates/footer.ejs %>
+	<!--// -->           
